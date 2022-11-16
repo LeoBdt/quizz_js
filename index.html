@@ -2,21 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit quizz en js</title>
 </head>
     <body>
-        <div id="question">Emplacement question
-        <div id="Reponses">
-            <button id="reponse1"> Emplacement réponse 1 </button>
-            <button id="reponse2"> Emplacement réponse 2 </button>
-            <button id="reponse3"> Emplacement réponse 3 </button>
-            <button id="reponse4"> Emplacement réponse 4 </button>  
+        <div id="question" class="texte_question">Emplacement question </div>
+        <div id="Reponses"></div>
+            <button id="reponse1" class="texte_reponse" onClick="clickReponse(1);">Emplacement réponse 1 </button>
+            <button id="reponse2" class="texte_reponse" onClick="clickReponse(2);">Emplacement réponse 2 </button>
+            <button id="reponse3" class="texte_reponse" onClick="clickReponse(3);">Emplacement réponse 3 </button>
+            <button id="reponse4" class="texte_reponse" onClick="clickReponse(4);">Emplacement réponse 4 </button>
         </div>
-        <div id="resultat">Zone resultat
+        <div id="resultat" class="texte_resultat">Zone resultat </div>
+        </div>
+        <button id="nextQuestion" class="bouton_next" onClick="presenterQuestion()"> Question suivante </button> 
+        <script>
+
+            var zoneQuestion = document.getElementById("question");
+            var zoneReponse1 = document.getElementById("reponse1");
+            var zoneReponse2 = document.getElementById("reponse2");
+            var zoneReponse3 = document.getElementById("reponse3");
+            var zoneReponse4 = document.getElementById("reponse4");
+            var zoneResultat = document.getElementById("resultat");
+            var zoneBoutonNext = document.getElementById("nextQuestion");
+            var idReponseCorrecte;
             
-        </div>
-        <button id="nextQuestion"> Question suivante /button>
+            var tabQuestions = [
+                [ "Qui c'est le plus fort, l'hippopotame ou l'éléphant?", "L'hyppopotame", "l'elephant",  "ils sont de force égale",  "j'ai pas la ref", 2 ] ,
+                [ "Quelle est la réponse à La grande question sur la vie, l'univers et le reste ?", "AYBABTU", "Obiwan Kenoby", "42", "La réponse D", 3 ],
+                [ "Comment est mort Jack Daniel's?", "Assassiné avec une faucille et un marteau", "d'une syrhose du foie", "Attaqué par un essaim d'abeilles", "Il s'est cogné le petit orteil contre son coffre-fort", 4 ],
+                [ "Comment est la blanquette?", "Elle est bonne", "Elle est mauvaise", "Elle est blan...quette", "Laisse tomber j'ai pas la ref", 1 ], 
+                [ "Quelle est la deuxième planète du système solaire?", "Mercure", "Venus", "Mars", "Pluton",  2]
+            ];
+
+            function presenterQuestion() {
+                var idQuestion = Math.floor(Math.random() * tabQuestions.length);
+                var groupeQuestionReponses = tabQuestions[idQuestion];
+                zoneReponse1.disabled = false;
+                zoneReponse2.disabled = false;
+                zoneReponse3.disabled = false; 
+                zoneReponse4.disabled = false;
+                zoneReponse1.style.opacity = 1;
+                zoneReponse2.style.opacity = 1;
+                zoneReponse3.style.opacity = 1;
+                zoneReponse4.style.opacity = 1;
+                zoneResultat.style.visibility = "hidden";
+                zoneBoutonNext.style.visibility = "hidden";
+                zoneQuestion.innerHTML = groupeQuestionReponses[0];
+                zoneReponse1.innerHTML = groupeQuestionReponses[1];
+                zoneReponse2.innerHTML = groupeQuestionReponses[2]; 
+                zoneReponse3.innerHTML = groupeQuestionReponses[3]; 
+                zoneReponse4.innerHTML = groupeQuestionReponses[4];
+                idReponseCorrecte = groupeQuestionReponses[5];
+            
+            }
+
+            function clickReponse(numReponseCliquee) {
+                zoneResultat.style.visibility = "visible";
+                zoneBoutonNext.style.visibility = "visible";
+                zoneReponse1.disabled = true;
+                zoneReponse2.disabled = true;
+                zoneReponse3.disabled = true;
+                zoneReponse4.disabled = true;
+                if (numReponseCliquee != 1) zoneReponse1.style.opacity = 0.5;
+                if (numReponseCliquee != 2) zoneReponse2.style.opacity = 0.5;
+                if (numReponseCliquee != 3) zoneReponse3.style.opacity = 0.5;
+                if (numReponseCliquee != 4) zoneReponse4.style.opacity = 0.5;
+                if (idReponseCorrecte == numReponseCliquee) {
+                    zoneResultat.innerHTML = "Votre reponse est juste";
+                } else {
+                    zoneResultat.innerHTML = "Votre reponse est fausse";
+    }
+            }   
+            presenterQuestion();
+            
+        </script>
     </body>
 </html>
+
